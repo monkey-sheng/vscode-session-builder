@@ -1,13 +1,14 @@
 {
-  "name": "session-builder",
-  "publisher": "wesleychestang",
-  "displayName": "Session Builder",
+  "name": "session-saver",
+  "publisher": "monkey-sheng",
+  "displayName": "Session Saver",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wesley-chestang/vscode-session-builder.git"
+    "url": "https://github.com/monkey-sheng/vscode-session-builder.git"
   },
   "description": "Save all currently open tabs in the session, so you can re-open them all later.",
-  "version": "1.1.0",
+  "icon": "media/Gemini_Generated_Image_r2yjc5r2yjc5r2yj.png",
+  "version": "2.0.1",
   "engines": {
     "vscode": "^1.99.0"
   },
@@ -15,49 +16,95 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:session-builder.saveSession",
-    "onCommand:session-builder.restoreSession",
-    "onCommand:session-builder.restoreNamedSession",
-    "onCommand:session-builder.deleteSession",
-    "onCommand:session-builder.overwriteSession"
+    "onCommand:session-saver.saveSession",
+    "onCommand:session-saver.restoreSession",
+    "onCommand:session-saver.restoreNamedSession",
+    "onCommand:session-saver.deleteSession",
+    "onCommand:session-saver.overwriteSession",
+    "onCommand:session-saver.changeFileLocation",
+    "onCommand:session-saver.deleteAllSessions",
+    "onView:sessionSaverView"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "session-builder.saveSession",
-        "title": "Session Builder: Save Session"
+        "command": "session-saver.saveSession",
+        "title": "Session Saver: Save Session"
       },
       {
-        "command": "session-builder.restoreSession",
-        "title": "Session Builder: Restore Session"
+        "command": "session-saver.restoreSession",
+        "title": "Session Saver: Restore Session"
       },
       {
-        "command": "session-builder.restoreNamedSession",
-        "title": "Session Builder: Restore Named Session"
+        "command": "session-saver.restoreNamedSession",
+        "title": "Session Saver: Restore Named Session"
       },
       {
-        "command": "session-builder.deleteSession",
-        "title": "Session Builder: Delete Session"
+        "command": "session-saver.deleteSession",
+        "title": "Session Saver: Delete Session"
       },
       {
-        "command": "session-builder.overwriteSession",
+        "command": "session-saver.overwriteSession",
         "title": "Overwrite Session with Open Files"
+      },
+      {
+        "command": "session-saver.changeFileLocation",
+        "title": "Session Saver: Change File Location"
+      },
+      {
+        "command": "session-saver.deleteAllSessions",
+        "title": "Session Saver: Delete All Sessions"
       }
     ],
+    "configuration": {
+      "title": "Session Saver",
+      "properties": {
+        "sessionSaver.fileLocation": {
+          "type": "string",
+          "enum": [
+            "workspace",
+            "global",
+            "custom"
+          ],
+          "default": "workspace",
+          "description": "Determines where Session Saver stores its session files."
+        },
+        "sessionSaver.workspaceFolder": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the workspace folder used when file location is set to \"workspace\". Leave blank to use the first open workspace."
+        },
+        "sessionSaver.customFolder": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the folder used when file location is set to \"custom\"."
+        },
+        "sessionSaver.saveBehaviorOnRestore": {
+          "type": "string",
+          "enum": [
+            "ask",
+            "yes - save and continue",
+            "no - just switch"
+          ],
+          "default": "ask",
+          "description": "Controls whether Session Saver prompts to save open tabs before restoring another session."
+        }
+      }
+    },
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "sessionBuilder",
-          "title": "Session Builder",
+          "id": "sessionSaver",
+          "title": "Session Saver",
           "icon": "media/icon.png"
         }
       ]
     },
     "views": {
-      "sessionBuilder": [
+      "sessionSaver": [
         {
-          "id": "sessionBuilderView",
+          "id": "sessionSaverView",
           "name": "Sessions"
         }
       ]
@@ -72,14 +119,14 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.99.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.99.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
-    "typescript": "^5.8.3",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
   }
 }
